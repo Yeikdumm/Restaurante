@@ -1,4 +1,0 @@
-Options -Indexes
-RewriteEngine On
-# Redirect everything to /public
-# (Place this .htaccess inside /public to handle pretty URLs if you later add them)
