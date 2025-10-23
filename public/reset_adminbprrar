@@ -1,0 +1,17 @@
+<?php
+require __DIR__ . '/../bootstrap/autoload.php';
+require __DIR__ . '/../bootstrap/helpers.php';
+require __DIR__ . '/../config/database.php';
+
+$newPass = 'Admin.2025*'; // puedes cambiarla si quieres
+$hash = password_hash($newPass, PASSWORD_BCRYPT);
+try {
+    $pdo = DB::conn();
+    $stmt = $pdo->prepare("UPDATE users SET password_hash=? WHERE email='admin@local' LIMIT 1");
+    $stmt->execute([$hash]);
+    echo "<p>Listo. Nueva contraseña para admin@local = <b>{$newPass}</b></p>";
+    echo "<p>Hash: ".htmlspecialchars($hash)."</p>";
+    echo "<p>Ve a <a href='login.php'>login</a> e intenta entrar.</p>";
+} catch (Throwable $e) {
+    echo "<pre>ERROR: ".htmlspecialchars($e->getMessage())."</pre>";
+}
